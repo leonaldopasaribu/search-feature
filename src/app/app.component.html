@@ -6,10 +6,15 @@
         name="search"
         placeholder="Search..."
         class="search-input"
+        #search
       />
       <a href="#" class="search-btn">
         <i class="fas fa-search"></i>
       </a>
     </div>
   </form>
+
+  <div *ngFor="let user of users; trackBy: trackByIndex">
+    <p>{{ user.name }}</p>
+  </div>
 </div>

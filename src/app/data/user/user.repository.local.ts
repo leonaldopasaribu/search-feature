@@ -10,16 +10,20 @@ import { UserRepository } from 'src/app/core/repositories/user.repository';
 import { USERS } from 'src/app/shared/constants/user.const';
 
 @Injectable()
-export class ProvinceRepositoryInvestree extends UserRepository {
+export class UserRepositoryLocal extends UserRepository {
   constructor(private mapper: UserMapperLocal) {
     super();
   }
 
-  override fetchAll(): Observable<Array<UserEntity>> {
+  override fetchAllByKeyword(keyword: string): Observable<Array<UserEntity>> {
     const timerTime = Math.floor(Math.random() * 10_000);
 
     return timer(timerTime).pipe(
-      map(() => USERS.map((data: UserDtoLocal) => this.mapper.toEntity(data)))
+      map(() =>
+        USERS.filter((state) =>
+          state.text.toLocaleLowerCase().includes(keyword)
+        ).map((data: UserDtoLocal) => this.mapper.toEntity(data))
+      )
     );
   }
 }
