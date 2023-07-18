@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { fromEvent, map, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, fromEvent, map, switchMap } from 'rxjs';
 
 import { UserRepository } from './core/repositories/user.repository';
 import { UserEntity } from './core/entities/user.entity';
@@ -30,6 +30,8 @@ export class AppComponent implements OnInit {
     fromEvent(this.search.nativeElement, 'input')
       .pipe(
         map((event: any) => event.target.value),
+        debounceTime(500),
+        distinctUntilChanged(),
         switchMap((keyword: string) =>
           this.userRepository.fetchAllByKeyword(keyword)
         )
