@@ -15,7 +15,7 @@ export class ProvinceRepositoryInvestree extends UserRepository {
     super();
   }
 
-  override fetchAll(): Observable<UserEntity[]> {
+  override fetchAll(): Observable<Array<UserEntity>> {
     const timerTime = Math.floor(Math.random() * 10_000);
 
     return timer(timerTime).pipe(
